@@ -88,10 +88,22 @@ AND playlisttrack.trackid = track.trackid
 GROUP  BY playlist.name
 
 -- 15. Provide a query that shows all the Tracks, but displays no IDs. The resultant table should include the Album name, Media type and Genre.
-
+SELECT track.name AS "Track", album.title AS "Album", mediatype.name AS "Media Type", genre.name AS "Genre"
+FROM Track
+JOIN Album
+JOIN MediaType
+JOIN Genre
+WHERE album.albumid = track.albumid
+AND mediatype.mediatypeid = track.mediaTypeId
+AND genre.genreid = track.genreid
 
 -- 16. Provide a query that shows all Invoices but includes the # of invoice line items.
-
+SELECT invoice.*,
+COUNT(invoiceline.invoiceid) AS "Total Line Items"
+FROM Invoice
+JOIN InvoiceLine
+WHERE invoiceline.invoiceid = invoice.invoiceid
+GROUP BY invoice.invoiceid
 
 -- 17. Provide a query that shows total sales made by each sales agent.
 
