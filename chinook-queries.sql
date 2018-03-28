@@ -53,16 +53,39 @@ FROM InvoiceLine
 GROUP BY invoiceline.invoiceid
 
 -- 11. Provide a query that includes the track name with each invoice line item.
-
+SELECT invoiceline.*,
+track.name AS "Track Name"
+FROM invoiceline 
+JOIN Track
+WHERE invoiceline.trackid = track.trackid
 
 -- 12. Provide a query that includes the purchased track name AND artist name with each invoice line item.
-
+SELECT invoiceline.*,
+track.name AS "Track Name",
+artist.name AS "Artist"
+FROM invoiceline 
+JOIN Track
+JOIN Album
+JOIN artist 
+WHERE invoiceline.trackid = track.trackid
+AND track.albumid = album.albumid
+AND album.artistid = artist.artistid
 
 -- 13. Provide a query that shows the # of invoices per country. HINT: GROUP BY
-
+SELECT COUNT(invoiceid) AS "Invoice Totals", 
+invoice.billingcountry
+FROM invoice
+GROUP BY billingcountry
 
 -- 14. Provide a query that shows the total number of tracks in each playlist. The Playlist name should be included on the resultant table.
-
+SELECT COUNT(track.trackid) AS "Total Tracks",
+playlist.name AS "Playlist"
+FROM Playlist
+JOIN PlaylistTrack
+JOIN Track
+WHERE playlist.playlistid = playlisttrack.playlistid
+AND playlisttrack.trackid = track.trackid
+GROUP  BY playlist.name
 
 -- 15. Provide a query that shows all the Tracks, but displays no IDs. The resultant table should include the Album name, Media type and Genre.
 
