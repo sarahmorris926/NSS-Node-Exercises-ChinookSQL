@@ -1,8 +1,10 @@
 -- 1. Provide a query showing Customers (just their full names, customer ID and country) who are not in the US.
-SELECT CustomerId "ID", FirstName "First Name", LastName "Last Name", Country FROM Customer WHERE customer.country NOT LIKE 'USA'
+SELECT CustomerId "ID", FirstName "First Name", LastName "Last Name", Country FROM Customer 
+WHERE customer.country NOT LIKE 'USA'
 
 -- 2. Provide a query only showing the Customers from Brazil.
-SELECT FirstName || " " || LastName AS "Full Name" FROM Customer WHERE Country = 'Brazil'
+SELECT FirstName || " " || LastName AS "Full Name" FROM Customer 
+WHERE Country = 'Brazil'
 
 -- 3. Provide a query showing the Invoices of customers who are from Brazil. The resultant table should show the customer's full name, Invoice ID, Date of the invoice and billing country.
 SELECT (customer.FirstName || " " || customer.LastName) AS "Full Name",
@@ -12,7 +14,8 @@ JOIN Customer
 ON customer.country = "Brazil"
 
 -- 4. Provide a query showing only the Employees who are Sales Agents.
-SELECT * FROM Employee WHERE title = "Sales Support Agent"
+SELECT * FROM Employee 
+WHERE title = "Sales Support Agent"
 
 -- 5. Provide a query showing a unique list of billing countries from the Invoice table.
 SELECT DISTINCT BillingCountry FROM Invoice
@@ -20,19 +23,34 @@ SELECT DISTINCT BillingCountry FROM Invoice
 -- 6. Provide a query that shows the invoices associated with each sales agent. The resultant table should include the Sales Agent's full name.
 SELECT invoice.InvoiceId, invoice.Total, invoice.CustomerId, invoice.invoiceDate, (employee.FirstName || " " || employee.LastName) AS "Full Name" FROM Invoice
 JOIN Customer
-JOIN Employee WHERE customer.SupportRepId = employee.EmployeeId
+JOIN Employee 
+WHERE customer.SupportRepId = employee.EmployeeId
 
 -- 7. Provide a query that shows the Invoice Total, Customer name, Country and Sale Agent name for all invoices and customers.
-
+SELECT invoice.total, (customer.firstName || " " || customer.lastName) AS "Full Name", customer.country, (employee.firstName || " " || employee.lastName) AS "Employee Name" FROM Invoice
+JOIN Customer
+JOIN Employee 
+WHERE customer.SupportRepId = employee.employeeid
 
 -- 8. How many Invoices were there in 2009 and 2011? What are the respective total sales for each of those years?
-
+SELECT COUNT(invoice.invoiceid) AS "Total Invoices",
+SUM(Total) as 'Total Sales',
+STRFTIME('%Y', invoicedate) as "Year"
+FROM Invoice
+WHERE invoice.InvoiceDate LIKE '%2009%'
+OR invoice.invoiceDate LIKE '%2011%'
+GROUP BY year
 
 -- 9. Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for Invoice ID 37.
-
+SELECT COUNT(*) AS "Invoice 37 Total"
+FROM InvoiceLine
+WHERE InvoiceLine.InvoiceId = '37'
 
 -- 10. Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for each Invoice. HINT: GROUP BY
-
+SELECT COUNT(*) AS "Invoice Totals",
+invoiceline.invoiceid
+FROM InvoiceLine
+GROUP BY invoiceline.invoiceid
 
 -- 11. Provide a query that includes the track name with each invoice line item.
 
