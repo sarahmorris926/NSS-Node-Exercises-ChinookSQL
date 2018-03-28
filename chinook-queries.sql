@@ -1,4 +1,5 @@
 -- Provide a query showing Customers (just their full names, customer ID and country) who are not in the US.
+SELECT CustomerId "ID", FirstName "First Name", LastName "Last Name", Country FROM Customer WHERE customer.country NOT LIKE 'USA'
 
 -- Provide a query only showing the Customers from Brazil.
 
