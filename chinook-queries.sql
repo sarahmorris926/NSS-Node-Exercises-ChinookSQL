@@ -177,6 +177,16 @@ ORDER BY COUNT(invoiceid) DESC
 -- USA customers spent the most
 
 -- 23. Provide a query that shows the most purchased track of 2013.
+SELECT COUNT(invoiceline.invoicelineid), track.name
+FROM Invoice
+JOIN invoiceline 
+JOIN track
+WHERE invoiceline.InvoiceId = invoice.invoiceid 
+AND invoiceline.trackid = track.trackid 
+AND invoice.InvoiceDate LIKE '%2013%'
+GROUP BY track.name 
+ORDER BY COUNT(invoice.invoiceid) DESC
+LIMIT 1
 
 
 -- 24. Provide a query that shows the top 5 most purchased tracks over all.
@@ -215,4 +225,15 @@ ORDER BY COUNT(invoiceline.invoicelineid) desc
 LIMIT 3
 
 -- 27. Provide a query that shows the number tracks purchased in all invoices that contain more than one genre.
+SELECT COUNT(track.trackid) AS "Tracks", invoice.invoiceid AS "Total Invoices", 
+COUNT(DISTINCT genre.genreid) AS "Genres"
+FROM Track
+JOIN InvoiceLine
+JOIN Invoice
+JOIN Genre
+WHERE track.trackid = invoiceline.trackid
+AND invoiceline.invoiceid = invoice.invoiceid
+AND track.genreid = genre.genreid
+GROUP BY invoice.invoiceid
+HAVING COUNT(DISTINCT genre.genreid) > 1
 
