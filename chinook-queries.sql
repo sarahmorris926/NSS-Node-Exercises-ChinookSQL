@@ -191,10 +191,28 @@ ORDER BY COUNT(invoice.invoiceid) DESC
 LIMIT 5
 
 -- 25. Provide a query that shows the top 3 best selling artists.
-
+SELECT COUNT(invoiceline.invoicelineid) AS "Total Invoices", artist.name AS "Artist Name"
+FROM Invoiceline
+JOIN artist 
+JOIN Album
+JOIN Track
+WHERE invoiceline.trackid = track.trackid
+AND track.albumid = album.albumid
+AND album.artistid = artist.artistid
+GROUP BY artist.Name
+ORDER BY COUNT(invoiceline.invoicelineid) desc
+LIMIT 3
 
 -- 26. Provide a query that shows the most purchased Media Type.
-
+SELECT COUNT(invoiceline.invoicelineid) AS "Total Invoices", mediatype.name AS "Media Type"
+FROM Invoiceline
+JOIN track
+JOIN mediatype
+WHERE invoiceline.trackid = track.trackid
+AND mediatype.mediatypeid = track.mediatypeid
+GROUP BY mediatype.name
+ORDER BY COUNT(invoiceline.invoicelineid) desc
+LIMIT 3
 
 -- 27. Provide a query that shows the number tracks purchased in all invoices that contain more than one genre.
 
