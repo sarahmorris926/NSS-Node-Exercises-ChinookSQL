@@ -177,7 +177,7 @@ ORDER BY COUNT(invoiceid) DESC
 -- USA customers spent the most
 
 -- 23. Provide a query that shows the most purchased track of 2013.
-SELECT COUNT(invoiceline.invoicelineid), track.name
+SELECT COUNT(invoiceline.invoicelineid) AS "Total Invoices", track.name
 FROM Invoice
 JOIN invoiceline 
 JOIN track
