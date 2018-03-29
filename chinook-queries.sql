@@ -106,28 +106,89 @@ WHERE invoiceline.invoiceid = invoice.invoiceid
 GROUP BY invoice.invoiceid
 
 -- 17. Provide a query that shows total sales made by each sales agent.
-
+SELECT COUNT(invoice.invoiceid) AS "Total Invoices",
+(employee.firstname || " " || employee.lastname) AS "Employee"
+FROM Invoice
+JOIN Customer
+JOIN Employee
+WHERE invoice.customerid = customer.customerid
+AND customer.SupportRepId = employee.employeeid
+GROUP BY employee.employeeid
 
 -- 18. Which sales agent made the most in sales in 2009?
+SELECT COUNT(invoice.invoiceid) AS "Total Invoices",
+(employee.firstname || " " || employee.lastname) AS "Employee"
+FROM Invoice
+JOIN Customer
+JOIN Employee
+WHERE invoice.customerid = customer.customerid
+AND customer.SupportRepId = employee.employeeid
+AND invoice.invoicedate LIKE '%2009%'
+GROUP BY employee.employeeid
+ORDER BY COUNT(invoice.invoiceid) DESC 
+LIMIT 1
 
+-- Margaret Park
 
 -- 19. Which sales agent made the most in sales in 2010?
+SELECT COUNT(invoice.invoiceid) AS "Total Invoices",
+(employee.firstname || " " || employee.lastname) AS "Employee"
+FROM Invoice
+JOIN Customer
+JOIN Employee
+WHERE invoice.customerid = customer.customerid
+AND customer.SupportRepId = employee.employeeid
+AND invoice.invoicedate LIKE '%2010%'
+GROUP BY employee.employeeid
+ORDER BY COUNT(invoice.invoiceid) DESC 
+LIMIT 1
 
+-- Jane Peacock
 
 -- 20. Which sales agent made the most in sales over all?
+SELECT COUNT(invoice.invoiceid) AS "Total Invoices",
+(employee.firstname || " " || employee.lastname) AS "Employee"
+FROM Invoice
+JOIN Customer
+JOIN Employee
+WHERE invoice.customerid = customer.customerid
+AND customer.SupportRepId = employee.employeeid
+GROUP BY employee.employeeid
+ORDER BY COUNT(invoice.invoiceid) DESC 
+LIMIT 1
 
+-- Jane Peacock
 
 -- 21. Provide a query that shows the # of customers assigned to each sales agent.
+SELECT COUNT(customer.customerid) AS "Total Customers", 
+(employee.firstname || " " || employee.lastname) AS "Sales Rep"
+FROM Customer
+JOIN Employee
+WHERE customer.supportrepid = employee.employeeid
+GROUP BY employee.employeeid
 
 
 -- 22. Provide a query that shows the total sales per country. Which country's customers spent the most?
+SELECT COUNT(invoiceid) AS "Total Invoices", billingcountry AS "Country"
+FROM Invoice
+GROUP BY billingcountry
+ORDER BY COUNT(invoiceid) DESC
 
+-- USA customers spent the most
 
 -- 23. Provide a query that shows the most purchased track of 2013.
 
 
 -- 24. Provide a query that shows the top 5 most purchased tracks over all.
-
+SELECT COUNT(invoice.invoiceid) AS "Total Invoices", track.name
+FROM Invoice
+JOIN invoiceline 
+JOIN track
+WHERE invoiceline.InvoiceId = invoice.invoiceid 
+AND invoiceline.trackid = track.trackid 
+GROUP BY track.name 
+ORDER BY COUNT(invoice.invoiceid) DESC
+LIMIT 5
 
 -- 25. Provide a query that shows the top 3 best selling artists.
 
